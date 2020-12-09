@@ -1,0 +1,40 @@
+﻿<Window x:Name="LocalizationToolWindow" x:Class="LocalizationTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LocalizationTool"
+        mc:Ignorable="d"
+        Title="LocalizationTool" Height="450" Width="800">
+
+    <Grid>
+        <Menu x:Name="MainMenu" VerticalAlignment="Top">
+            <MenuItem x:Name="FileMenuItem" Header="File" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <MenuItem x:Name="OpenFileMenuItem" Header="Open file" Click="OpenFileMenuItem_Click" ToolTip="Clear current localization and import file. Supported formats: .po, .json, .csv, .xlsx"/>
+                <MenuItem x:Name="ClearLocMenuItem" Header="Clear localization" Click="ClearLocMenuItem_Click"/>
+                <MenuItem x:Name="CloseMenuItem" Header="Close" Click="CloseMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="ImportMenuItem" Header="Import">
+                <MenuItem x:Name="ImportPoMenuItem" Header="Import .po file" Click="ImportPoMenuItem_Click"/>
+                <MenuItem x:Name="ImportJsonMenuItem" Header="Import JSON file" Click="ImportJsonMenuItem_Click"/>
+                <MenuItem x:Name="ImportCsvMenuItem" Header="Import CSV file" Click="ImportCsvMenuItem_Click"/>
+                <MenuItem x:Name="ImportExcelMenuItem" Header="Import Excel file" Click="ImportExcelMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="ExportMenuItem" Header="Export">
+                <MenuItem x:Name="ExportLocToPoMenuItem" Header="Export localization to .po file" ToolTip="Export to existing .po file with replace translation string or create a new one" Click="ExportLocToPoMenuItem_Click"/>
+                <MenuItem x:Name="ExportLocToJsonMenuItem" Header="Export localization to JSON" Click="ExportLocToJsonMenuItem_Click"/>
+                <MenuItem x:Name="ExportLocToCsvMenuItem" Header="Export localization to CSV" Click="ExportLocToCsvMenuItem_Click"/>
+                <MenuItem x:Name="ExportLocToExcel" Header="Export localization to Excel" Click="ExportLocToExcel_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="SpecialMenuItem" Header="Special">
+                <MenuItem x:Name="FastMergePoMenuItem" Header="Fast merge .po files" Click="FastMergePoMenuItem_Click"/>
+                <MenuItem x:Name="ShrinkLocByStatusMenuItem" Header="Shrink localization by status">
+                    <MenuItem x:Name="ShrinkNewMenuItem" Header="Only new" Click="ShrinkNewMenuItem_Click"/>
+                    <MenuItem x:Name="ShrinkChangedMenuItem" Header="Only changed" Click="ShrinkChangedMenuItem_Click"/>
+                    <MenuItem x:Name="ShrinkNoTranslationMenuItem" Header="Only no translation" Click="ShrinkNoTranslationMenuItem_Click"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <DataGrid x:Name="LocalizationGrid" Margin="0,23,0,0" MaxColumnWidth="500" CanUserAddRows="False"/>
+    </Grid>
+</Window>

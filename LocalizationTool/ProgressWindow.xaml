@@ -1,0 +1,16 @@
+﻿<Window x:Class="LocalizationTool.ProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LocalizationTool"
+        mc:Ignorable="d"
+        Title="ProgressWindow" Height="200" Width="400">
+    <Grid>
+        <ProgressBar x:Name="ExcelProcessBar" Height="10" Margin="0" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,44,50,100" TextWrapping="Wrap" Text="Items: " VerticalAlignment="Center"/>
+        <TextBlock x:Name="ItemsCountText" HorizontalAlignment="Center" Margin="75,44,0,100" TextWrapping="Wrap" Text="7000" VerticalAlignment="Center" Width="78"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="154,100,0,0" VerticalAlignment="Top" Width="74" Click="CancelButton_Click"/>
+
+    </Grid>
+</Window>
