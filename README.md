@@ -36,6 +36,7 @@ Special - Fast merge .po files: select two .po files for import and one for expo
 Special - Shrink: leave only fields of the specified status in localization
 
 Color status: 
+
 White: the field was in the previous localization and was not changed
 
 Green: the new field
