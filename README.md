@@ -11,7 +11,11 @@ Localization tool features:
 4) Import/export/merge .xlsx files to current localization (.po file)
 5) Shrink current localization for export only NotTranslated or New fields for example.
 
-!!! One important thing: The program does not support creation of .po files, it only works with what has been imported, you can export the localization to any format, but you need to export the final localization to a .po file. For example import .xlsx, export to .po.!!!
+!!! 
+
+One important thing: The program does not support creation of .po files, it only works with what has been imported, you can export the localization to any format, but you need to export the final localization to a .po file. For example import .xlsx, export to .po.
+
+!!!
 
 * [How it works](https://www.youtube.com/watch?v=eYbAv_A5AcY) - tutorial-example
 
