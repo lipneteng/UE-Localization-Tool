@@ -25,7 +25,7 @@ File - Close: Close the tool
 
 Import - (ext): Import file to current localization, if the localization was empty, it will create new fields, if the file has already been imported, it will compare the key and change the translation field
 
-Export - (ext): Export current localization to file, if it is a .po file, then the tool will replace the translation fields
+Export - (ext): Export current localization to file, if it is a .po file, then the tool will replace the translation fields (if a new one, then it will copy the localization to a new .po file (the file structure will be equivalent to the current .po file)
 
 Special - Fast merge .po files: select two .po files for import and one for export(if it is an existing file, the program will replace the translation fields, if a new one, then it will copy the localization to a new .po file (the file structure will be equivalent to the 2 imported file) 
 
@@ -33,8 +33,11 @@ Special - Shrink: leave only fields of the specified status in localization
 
 Color status: 
 White: the field was in the previous localization and was not changed
+
 Green: the new field
+
 Yellow-green: the field was in the previous localization and was changed
+
 Red: the field has no translation
 
 
