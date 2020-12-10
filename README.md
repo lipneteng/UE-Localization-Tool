@@ -18,7 +18,9 @@ Localization tool features:
 ## UI Description
 
 File - Open File: Clear current localization and import supported format (.po, .json, .csv, .xlsx)
+
 File - Clear Localization: - Clear current localization
+
 File - Close: Close the tool
 
 Import - (ext): Import file to current localization, if the localization was empty, it will create new fields, if the file has already been imported, it will compare the key and change the translation field
