@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocalizationTool
 {
@@ -15,7 +12,7 @@ namespace LocalizationTool
 
         public Dictionary<string, int> KeyMap = new Dictionary<string, int>(); // map where key - LocalizationField key, value - index in original file
 
-        public LocalizationFields LocalizationFields = new LocalizationFields();
+        public LocalizationFieldList LocalizationFields = new LocalizationFieldList();
 
         public string PoFileLanguage = "";
 

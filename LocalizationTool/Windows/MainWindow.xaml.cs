@@ -3,16 +3,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System;
-using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.ComponentModel;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace LocalizationTool
 {
@@ -40,7 +35,8 @@ namespace LocalizationTool
 
             LocalizationGrid.LoadingRow += LocalizationGridAddingNewItem;
             LocalizationData.OnLocalizationUpdated += UpdateLocalizationGrid;
-            FileHelper.OnFileImported += UpdateLocalizationGrid;
+
+            ImportLocalization.OnFileImported += UpdateLocalizationGrid;
         }
 
         private void LocalizationGridAddingNewItem(object sender, DataGridRowEventArgs e)
@@ -64,6 +60,18 @@ namespace LocalizationTool
             {
                 if (i != 2) LocalizationGrid.Columns[i].IsReadOnly = true; // allow edit only translation string
             }
+            
+            var languageList = LocalizationData.PoFilesMap.Keys;
+
+            if (languageList.Count > 0)
+            {
+                PoFilesBox.IsEnabled = true;
+                PoFilesBox.ItemsSource = null;
+                PoFilesBox.ItemsSource = languageList;
+                PoFilesBox.SelectedItem = LocalizationData.CurrentPoFileLanguage;
+            }
+            else PoFilesBox.IsEnabled = false;
+
         }
 
         private void OpenFileMenuItem_Click(object sender, RoutedEventArgs e)
@@ -82,22 +90,22 @@ namespace LocalizationTool
                 {
                     case ".po":
                         {
-                            FileHelper.ImportPoFileAsync(LocalizationData, fileName);
+                            ImportLocalization.ImportPoFileAsync(LocalizationData, fileName);
                             CreateProgressWindow();
                         }
                         break;
 
                     case ".json":
-                        FileHelper.ImportJson(LocalizationData, fileName);
+                        ImportLocalization.ImportJson(LocalizationData, fileName);
                         break;
 
                     case ".csv":
-                        FileHelper.ImportCsv(LocalizationData, fileName);
+                        ImportLocalization.ImportCsv(LocalizationData, fileName);
                         break;
 
                     case ".xlsx":
                         {
-                            FileHelper.ImportExcelFileAsync(LocalizationData, fileName);
+                            ImportLocalization.ImportExcelFileAsync(LocalizationData, fileName);
                             CreateProgressWindow();
                         }
                         break;
@@ -119,12 +127,12 @@ namespace LocalizationTool
 
         private void CreateProgressWindow()
         {
-            FileHelper.Worker.RunWorkerCompleted += WorkerCompleted;
+            ImportLocalization.ImportHandler.RunWorkerCompleted += WorkerCompleted;
 
             ProgressWindow progressWindow = new ProgressWindow();
             progressWindow.Owner = this;
             progressWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            progressWindow.InitProgressWindow(FileHelper.Worker);
+            progressWindow.InitProgressWindow(ImportLocalization.ImportHandler);
         }
 
         void WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -138,7 +146,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ImportPoFileAsync(LocalizationData, fileDialog.FileName);
+                ImportLocalization.ImportPoFileAsync(LocalizationData, fileDialog.FileName);
                 CreateProgressWindow();
             }
         }
@@ -149,7 +157,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ImportJson(LocalizationData, fileDialog.FileName);
+                ImportLocalization.ImportJson(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -159,7 +167,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ImportCsv(LocalizationData, fileDialog.FileName);
+                ImportLocalization.ImportCsv(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -169,7 +177,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ImportExcelFileAsync(LocalizationData, fileDialog.FileName);
+                ImportLocalization.ImportExcelFileAsync(LocalizationData, fileDialog.FileName);
                 CreateProgressWindow();
             }
         }
@@ -180,7 +188,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ExportToPoFile(LocalizationData, fileDialog.FileName);
+                ExportLocalization.ExportToPoFile(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -190,7 +198,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ExportToJsonFile(LocalizationData, fileDialog.FileName);
+                ExportLocalization.ExportToJsonFile(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -200,7 +208,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ExportToCsvFile(LocalizationData, fileDialog.FileName);
+                ExportLocalization.ExportToCsvFile(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -210,7 +218,7 @@ namespace LocalizationTool
 
             if (fileDialog.ShowDialog() == true)
             {
-                FileHelper.ExportToExcelFile(LocalizationData, fileDialog.FileName);
+                ExportLocalization.ExportToExcelFile(LocalizationData, fileDialog.FileName);
             }
         }
 
@@ -241,7 +249,17 @@ namespace LocalizationTool
         {
             Close();
         }
-    }
 
+        private void PoFilesBox_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            string selectedLanguage = comboBox.SelectedItem.ToString();
+            if (selectedLanguage != LocalizationData.CurrentPoFileLanguage)
+            {
+                LocalizationData.SetLocalizationByPoFile((sender as ComboBox).SelectedItem.ToString());
+            }
+        }
+    }
 }
 

@@ -21,18 +21,18 @@ namespace LocalizationTool
     public partial class ProgressWindow : Window
     {
 
-        public BackgroundWorker worker = null;
+        public BackgroundWorker ProgressHandler = null;
 
         public ProgressWindow()
         {
             InitializeComponent();
         }
 
-        public void InitProgressWindow(BackgroundWorker worker)
+        public void InitProgressWindow(BackgroundWorker progressHandler)
         {
-            this.worker = worker;
-            this.worker.ProgressChanged += worker_ProgressChanged;
-            this.worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            ProgressHandler = progressHandler;
+            ProgressHandler.ProgressChanged += worker_ProgressChanged;
+            ProgressHandler.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
 
         void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -43,14 +43,14 @@ namespace LocalizationTool
             ExcelProcessBar.Value = e.ProgressPercentage;
         }
 
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ProgressHandler.CancelAsync();
+        }
+
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.worker.CancelAsync();
         }
     }
 }

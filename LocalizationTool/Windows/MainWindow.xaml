@@ -36,5 +36,6 @@
             </MenuItem>
         </Menu>
         <DataGrid x:Name="LocalizationGrid" Margin="0,23,0,0" MaxColumnWidth="500" CanUserAddRows="False"/>
+        <ComboBox x:Name="PoFilesBox" HorizontalAlignment="Right" Margin="682,0,0,0" VerticalAlignment="Top" Width="100" DropDownClosed="PoFilesBox_DropDownClosed" IsEnabled="False"/>
     </Grid>
 </Window>
