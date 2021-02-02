@@ -131,11 +131,14 @@ namespace LocalizationTool
                         var translationCell = worksheet.Cells[i, 3].Value;
                         string translationString = worksheet.Cells[i, 3].Value != null ? translationCell.ToString() : "";
 
-                        string nameSpace = worksheet.Cells[i, 4].Value.ToString();
-                        string sourceLocation = worksheet.Cells[i, 5].Value.ToString();
+                        var nameSpaceCell = worksheet.Cells[i, 4].Value;
+                        string nameSpaceString = worksheet.Cells[i, 4].Value != null ? nameSpaceCell.ToString() : "";
+
+                        var sourceLocationCell = worksheet.Cells[i, 5].Value;
+                        string sourceLocationString = worksheet.Cells[i, 5].Value != null ? sourceLocationCell.ToString() : "";
 
                         if (ImportHandler != null) ImportHandler.ReportProgress(Convert.ToInt32(((double)i / rowCount) * 100), i);
-                        localization.AddFields(new LocalizationField(Key, sourceString, translationString, nameSpace, sourceLocation));
+                        localization.AddFields(new LocalizationField(Key, sourceString, translationString, nameSpaceString, sourceLocationString));
                     }
                 }
             }
